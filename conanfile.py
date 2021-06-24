@@ -11,7 +11,7 @@ class DiligentCoreConan(ConanFile):
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
     generators = "cmake_find_package", "cmake"
-    
+
     topics = ("conan", "gpu", "gui")
     _cmake = None
 
@@ -36,6 +36,11 @@ class DiligentCoreConan(ConanFile):
             tools.patch(**patch)
 
     def requirements(self):
+        self.requires("libjpeg/9d")
+        self.requires("libtiff/4.2.0")
+        self.requires("zlib/1.2.11")
+        self.requires("libpng/1.6.37")
+
         #self.requires("spirv-tools/2019.2")
         #self.requires("spirv-cross/20200403")
         #self.requires("glslang/8.13.3559")
