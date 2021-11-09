@@ -88,8 +88,7 @@ class DiligentCoreConan(ConanFile):
         cmake = self._configure_cmake()
         cmake.install()
         self.copy("License.txt", dst="licenses", src=self._source_subfolder)
-        
-        #self.copy("*.h", src="ThirdParty/")
+
         self.copy("*.hpp", src="DiligentCore/ThirdParty/", dst="ThirdParty/")
         self.copy("*.h", src="DiligentCore/ThirdParty/",   dst="ThirdParty/")
         
@@ -104,20 +103,27 @@ class DiligentCoreConan(ConanFile):
             self.cpp_info.libdirs.append("lib/DiligentCore/Release")
             self.cpp_info.libdirs.append("lib/DiligentFX/Release")
             self.cpp_info.libdirs.append("lib/DiligentTools/Release")
-            
-            #HLSL2GLSLConverter.exe
 
         self.cpp_info.includedirs.append('include')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/glslang')
-
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/SPIRV-Headers/include/')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/SPIRV-Cross/')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/SPIRV-Cross/include')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/SPIRV-Tools/include')
-        self.cpp_info.includedirs.append('DiligentCore/ThirdParty/Vulkan-Headers/include')
+        self.cpp_info.includedirs.append('include/DiligentCore/')
+        self.cpp_info.includedirs.append('ThirdParty')
         
-        self.cpp_info.libs = tools.collect_libs(self)
+        self.cpp_info.includedirs.append('ThirdParty/glslang')
+        self.cpp_info.includedirs.append('ThirdParty/SPIRV-Headers/include/')
+        self.cpp_info.includedirs.append('ThirdParty/SPIRV-Cross/')
+        self.cpp_info.includedirs.append('ThirdParty/SPIRV-Cross/include')
+        self.cpp_info.includedirs.append('ThirdParty/SPIRV-Tools/include')
+        self.cpp_info.includedirs.append('ThirdParty/Vulkan-Headers/include')
+
+        if self.settings.os == "Windows":
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs = ['GraphicsEngineVk_64d', 'GraphicsEngineOpenGL_64d', 'DiligentCore', 'MachineIndependentd', 'glslangd', 'HLSLd', 'OGLCompilerd', 'OSDependentd', 'spirv-cross-cored', 'SPIRVd', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGend']
+            if self.settings.build_type == "Release":
+                self.cpp_info.libs = ['GraphicsEngineVk_64r', 'GraphicsEngineOpenGL_64r', 'DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen']
+        elif self.settings.os == "Macos" or self.settings.os == "Linux":
+            self.cpp_info.libs = ['DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen', 'GraphicsEngineOpenGL', 'GraphicsEngineVk']
+        else:
+            self.cpp_info.libs = tools.collect_libs(self)
 
         self.cpp_info.defines.append("SPIRV_CROSS_NAMESPACE_OVERRIDE=diligent_spirv_cross")
         if self.settings.os in ["Macos", "Linux"]:
