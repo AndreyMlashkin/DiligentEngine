@@ -120,11 +120,11 @@ class DiligentCoreConan(ConanFile):
         # Libs order is very important here, that's the reason not to use 'collect_libs'
         if self.settings.os == "Windows":
             if self.settings.build_type == "Debug":
-                self.cpp_info.libs = ['GraphicsEngineVk_64d', 'GraphicsEngineOpenGL_64d', 'DiligentCore', 'MachineIndependentd', 'glslangd', 'HLSLd', 'OGLCompilerd', 'OSDependentd', 'spirv-cross-cored', 'SPIRVd', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGend']
+                self.cpp_info.libs = ['DiligentTools', 'DiligentFX', 'GraphicsEngineVk_64d', 'GraphicsEngineOpenGL_64d', 'DiligentCore', 'MachineIndependentd', 'glslangd', 'HLSLd', 'OGLCompilerd', 'OSDependentd', 'spirv-cross-cored', 'SPIRVd', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGend']
             if self.settings.build_type == "Release":
-                self.cpp_info.libs = ['GraphicsEngineVk_64r', 'GraphicsEngineOpenGL_64r', 'DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen']
+                self.cpp_info.libs = ['DiligentTools', 'DiligentFX', 'GraphicsEngineVk_64r', 'GraphicsEngineOpenGL_64r', 'DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen']
         elif self.settings.os == "Macos" or self.settings.os == "Linux":
-            self.cpp_info.libs = ['DiligentCore', 'glslang', 'MachineIndependent', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'spirv-cross-core', 'glew-static', 'GenericCodeGen', 'OGLCompiler', 'OSDependent', 'HLSL']
+            self.cpp_info.libs = ['DiligentFX', 'DiligentCore', 'glslang', 'MachineIndependent', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'spirv-cross-core', 'glew-static', 'GenericCodeGen', 'OGLCompiler', 'OSDependent', 'HLSL']
         else:
             self.cpp_info.libs = tools.collect_libs(self)
 
