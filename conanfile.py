@@ -19,7 +19,7 @@ class DiligentCoreConan(ConanFile):
     "with_glslang" : True
     }
     generators = "cmake_find_package", "cmake"
-    exports_sources = ["*", "!build/*", "!conanfile.py", "!doc/*", "!Tests/*", "!.github/*"]
+    exports_sources = ["*", "!build/*", "!conanfile.py", "!doc/*", "!Tests/*", "!.github/*", "!test_package/*"]
     _cmake = None
     short_paths=True
     version="d72a87fa"
@@ -124,7 +124,7 @@ class DiligentCoreConan(ConanFile):
             if self.settings.build_type == "Release":
                 self.cpp_info.libs = ['GraphicsEngineVk_64r', 'GraphicsEngineOpenGL_64r', 'DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen']
         elif self.settings.os == "Macos" or self.settings.os == "Linux":
-            self.cpp_info.libs = ['DiligentCore', 'MachineIndependent', 'glslang', 'HLSL', 'OGLCompiler', 'OSDependent', 'spirv-cross-core', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGen', 'GraphicsEngineOpenGL', 'GraphicsEngineVk']
+            self.cpp_info.libs = ['DiligentCore', 'glslang', 'MachineIndependent', 'SPIRV', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'spirv-cross-core', 'glew-static', 'GenericCodeGen', 'OGLCompiler', 'OSDependent', 'HLSL']
         else:
             self.cpp_info.libs = tools.collect_libs(self)
 

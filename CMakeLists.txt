@@ -10,6 +10,8 @@ set(CMAKE_XCODE_SCHEME_MALLOC_SCRIBBLE YES)
 set(CMAKE_XCODE_SCHEME_MALLOC_GUARD_EDGES YES)
 
 project(DiligentEngine)
+include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+conan_basic_setup()
 
 option(DILIGENT_BUILD_TOOLS "Build DiligentTools module" ON)
 option(DILIGENT_BUILD_FX "Build DiligentFX module" ON)
