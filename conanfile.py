@@ -56,6 +56,8 @@ class DiligentCoreConan(ConanFile):
         #    tools.patch(**patch)
 
     def requirements(self):
+        self.requires("opengl/system")
+
         self.requires("libjpeg/9d")
         self.requires("libtiff/4.3.0")
         self.requires("zlib/1.2.11")
@@ -96,13 +98,13 @@ class DiligentCoreConan(ConanFile):
 
     def package_info(self):
         if self.settings.build_type == "Debug":
-            self.cpp_info.libdirs.append("lib/DiligentCore/Debug")
-            self.cpp_info.libdirs.append("lib/DiligentFX/Debug")
-            self.cpp_info.libdirs.append("lib/DiligentTools/Debug")            
+            self.cpp_info.libdirs.append("lib/DiligentCore/Debug/")
+            self.cpp_info.libdirs.append("lib/DiligentFX/Debug/")
+            self.cpp_info.libdirs.append("lib/DiligentTools/Debug/")
         if self.settings.build_type == "Release":
-            self.cpp_info.libdirs.append("lib/DiligentCore/Release")
-            self.cpp_info.libdirs.append("lib/DiligentFX/Release")
-            self.cpp_info.libdirs.append("lib/DiligentTools/Release")
+            self.cpp_info.libdirs.append("lib/DiligentCore/Release/")
+            self.cpp_info.libdirs.append("lib/DiligentFX/Release/")
+            self.cpp_info.libdirs.append("lib/DiligentTools/Release/")
 
         self.cpp_info.includedirs.append('include')
         self.cpp_info.includedirs.append('include/DiligentCore/')
@@ -115,6 +117,7 @@ class DiligentCoreConan(ConanFile):
         self.cpp_info.includedirs.append('ThirdParty/SPIRV-Tools/include')
         self.cpp_info.includedirs.append('ThirdParty/Vulkan-Headers/include')
 
+        # Libs order is very important here, that's the reason not to use 'collect_libs'
         if self.settings.os == "Windows":
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs = ['GraphicsEngineVk_64d', 'GraphicsEngineOpenGL_64d', 'DiligentCore', 'MachineIndependentd', 'glslangd', 'HLSLd', 'OGLCompilerd', 'OSDependentd', 'spirv-cross-cored', 'SPIRVd', 'SPIRV-Tools-opt', 'SPIRV-Tools', 'glew-static', 'GenericCodeGend']
